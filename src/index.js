@@ -4,9 +4,20 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import { ContractKitProvider, Alfajores  } from '@celo-tools/use-contractkit';
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+     <ContractKitProvider
+      dappName="voting dapp"
+      dappDescription="My Dacade submission"
+      dappUrl="https://example.com"
+      networks={[Alfajores]}
+    >
+          <App />
+    
+    </ContractKitProvider>
+
   </React.StrictMode>,
   document.getElementById('root')
 );
