@@ -97,7 +97,7 @@ export default function App() {
     return (
       <section id="about" className="bg-primary text-white mb-0">
         <div className="container">
-          <h2 className="text-uppercase text-center text-white">Univote</h2>
+          <h2 className="text-uppercase text-center text-white">Celo Vote</h2>
           <hr className="star-light mb-5" />
           <div className="row">
             <div className="col-lg-12 ml-auto">
@@ -137,7 +137,7 @@ export default function App() {
       >
         <div className="container">
           <a className="navbar-brand js-scroll-trigger" href="#page-top">
-            UniVote
+            Celo Vote
           </a>
           <button
             className="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded"
@@ -185,7 +185,7 @@ export default function App() {
               </div>
             )}
 
-            <h1>UniVote</h1>
+            <h1>Celo Vote</h1>
             <hr className="star-light" />
             <h2 className="font-weight-light mb-0">
               Democracy- Voting - Security&nbsp
