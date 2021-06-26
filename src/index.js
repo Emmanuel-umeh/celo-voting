@@ -9,7 +9,7 @@ import { ContractKitProvider, Alfajores  } from '@celo-tools/use-contractkit';
 ReactDOM.render(
   <React.StrictMode>
      <ContractKitProvider
-      dappName="voting dapp"
+      dappName="CeloVoting"
       dappDescription="My Dacade submission"
       dappUrl="https://example.com"
       networks={[Alfajores]}
