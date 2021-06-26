@@ -2,6 +2,11 @@
   "name": "celo_voting",
   "version": "0.1.0",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/emmanuelJet/celo-voting.git"
+  },
+  "homepage": "https://emmanueljet.github.io/celo-voting",
   "dependencies": {
     "@celo-tools/use-contractkit": "^1.0.0-beta.12",
     "@celo/contractkit": "^1.2.0",
