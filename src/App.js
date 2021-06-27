@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { useContractKit, newKitFromWeb3 } from "@celo-tools/use-contractkit";
+import { useContractKit } from "@celo-tools/use-contractkit";
+import makeBlockie from 'ethereum-blockies-base64';
 import "@celo-tools/use-contractkit/lib/styles.css";
-import votingABI from "./contracts/voting.abi.json";
+import votingABI from "./contracts/celo_voting.abi.json";
 
-const ContractAddress = "0x0A3315a231D62779429C70df13026A1B1c9E208B";
+const ContractAddress = "0x3B291b855af8Cb88a64116075C613B887d77f912";
 export default function App() {
-  const { connect, address, kit, performActions, getConnectedKit } =
-    useContractKit();
+  const { connect, address, performActions, getConnectedKit } = useContractKit();
 
   const [loading, setloading] = useState(false);
-
   const [celoBalance, setCeloBalance] = useState(0);
-
   const [cUSDBalance, setcUSDBalance] = useState(0);
   const [candidates, setcandidates] = useState([]);
   const [contract, setcontract] = useState(null);
@@ -19,7 +17,6 @@ export default function App() {
   const ERC20_DECIMALS = 18;
 
   const getBalance = async function () {
-
     const kit = await getConnectedKit();
     const balance = await kit.getTotalBalance(address);
     const celoBalance = balance.CELO.shiftedBy(-ERC20_DECIMALS).toFixed(2);
@@ -33,7 +30,7 @@ export default function App() {
   };
 
   const getCandidates = async function () {
-    const _candidateLength = await contract.methods.getCandidateLength().call();
+    const _candidateLength = await contract.methods.candidatesLength().call();
     const _candidates = [];
 
     for (let i = 0; i < _candidateLength; i++) {
@@ -45,9 +42,7 @@ export default function App() {
           party: _candidate[1],
           voteCount: _candidate[2],
           creationDate: _candidate[3],
-          expirationDate: _candidate[4],
-          // price: new BigNumber(candidate[5]),
-          // sold: candidate[6],
+          expirationDate: _candidate[4]
         });
       });
       _candidates.push(_cand);
@@ -62,9 +57,9 @@ export default function App() {
         console.log({ kit });
         console.log({ address });
 
-        const candidate = await contract.methods
-          .vote(key)
-          .send({ from: kit.defaultAccount });
+        const candidate = await contract.methods.vote(key).send({
+          from: kit.defaultAccount
+        });
         console.log({ candidate });
         getCandidates();
       });
@@ -102,7 +97,7 @@ export default function App() {
           <div className="row">
             <div className="col-lg-12 ml-auto">
               <center>
-                <h1>Lets get you started on your voting dapp</h1>
+                <h1>Lets get you started on CeloVoting</h1>
 
                 <button
                   className="regBtn btn-primary btn-xl"
@@ -122,14 +117,6 @@ export default function App() {
   }
 
   return (
-    // <>
-    //   {address ? (
-    //     <div>Connected to {address}</div>
-    //   ) : (
-    //     <button onClick={connect}>Connect wallet</button>
-    //   )}
-    // </>
-
     <div>
       <nav
         className="navbar navbar-light navbar-expand-lg fixed-top bg-secondary text-uppercase"
@@ -177,7 +164,7 @@ export default function App() {
           <div className="container">
             <img
               className="img-fluid d-block mx-auto mb-5"
-              src="assets/img/profile.png"
+              src="assets/img/profile.png" alt="CeloVote"
             />
             {loading && (
               <div id="loading-bar-spinner" className="spinner">
@@ -188,7 +175,7 @@ export default function App() {
             <h1>Celo Vote</h1>
             <hr className="star-light" />
             <h2 className="font-weight-light mb-0">
-              Democracy- Voting - Security&nbsp
+              Democracy - Voting - Security
             </h2>
           </div>
         </header>
@@ -220,7 +207,7 @@ export default function App() {
                             id="images"
                             className="w-100 d-block"
                             src="https://images.pexels.com/photos/4669141/pexels-photo-4669141.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
-                            alt="Slide Image"
+                            alt={_candidate.name}
                             style={{
                               height: 400,
                             }}
@@ -256,6 +243,10 @@ export default function App() {
         <section id="about" className="bg-primary text-white mb-0">
           <div className="container">
             <h2 className="text-uppercase text-center text-white">Account</h2>
+            <img
+              className="rounded-circle overflow-hidden img-fluid d-block border border-white shadow-sm mx-auto my-3"
+              src={makeBlockie(address)} alt={address}
+            />
             <hr className="star-light mb-5" />
             <div className="row">
               <div className="col-lg-12 ml-auto ">
